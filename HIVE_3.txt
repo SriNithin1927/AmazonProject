@@ -1,0 +1,96 @@
+Products:
+
+Create table products(
+    product_id varchar(4),
+     Brand varchar(20),
+     Category varchar(20),
+     sub_Category varchar(20),
+     Product_name varchar(30),
+     Price float) 
+row format delimited fields terminated by ',' lines terminated by '\n';
+
+hive> load data inpath 'AmazonDB/products.csv' into table products
+
+
+
+Gender Table:
+ create table gender_table(
+    gender_id int,
+     gender_code varchar(1))
+row format delimited fields terminated by ',' lines terminated by '\n';
+
+
+Products Sales:
+
+ create table product_sales(
+     sale_id int,
+     product_id varchar(4),
+     customer_id int,
+     date_of_purchase varchar(12),
+     brand varchar(20),
+     category varchar(20),
+     sub_category varchar(20),
+     selling_price float,
+     discount_percent int,
+     payment varchar(5),
+     ratings int)
+row format delimited fields terminated by ',' lines terminated by '\n';
+
+
+Customers Table
+
+Create table customers(
+customer_id int,
+prefix varchar(4),
+first_name varchar(20),
+last_name varchar(20),
+gender_id int ,
+phone_no varchar(15),
+email_id varchar(30),
+prime_subscription varchar(4),
+address varchar(50),
+zipcode varchar(7))
+row format delimited fields terminated by ',' lines terminated by '\n';
+
+
+
+Customer_age Tables
+ create table customer_age(
+     person_id int,
+     customer_id int,
+     first_name varchar(20),
+     last_name varchar(20),
+     date_of_birth varchar(12))
+row format delimited fields terminated by ',' lines terminated by '\n';
+
+
+ hdfs dfs -mkdir /final_AmazonDB
+
+hdfs dfs -put /home/ubh01/Downloads/Processed_Data /final_AmazonDB
+
+
+Copy files into HDFS(Non_preprocessed Data)
+load data inpath "/AmazonDB/Amazon/Products.csv" into table products;
+
+load data inpath "/AmazonDB/Amazon/Customer Age.csv" into table customer_age;
+
+load data inpath "/AmazonDB/Amazon/Customers Table.csv" into table customers;
+
+load data inpath "/AmazonDB/Amazon/Gender Table.csv" into table gender_table;
+
+load data inpath "/AmazonDB/Amazon/Product Sales.csv" into table product_sales;
+
+
+
+
+mysql>  load data local infile '/home/ubh01/Downloads/final_Data/Products.csv' into table products fields terminated by ','  	enclosed by '"'  	lines terminated by '\n'  ignore 1 rows;
+
+mysql>  load data local infile '/home/ubh01/Downloads/final_Data/Product Sales.csv' into table product_sales fields terminated by ','  	enclosed by '"'  	lines terminated by '\n'  ignore 1 rows;
+
+
+mysql>  load data local infile '/home/ubh01/Downloads/final_Data/Amazon table - Gender Table.csv' into table gender_table fields terminated by ','  	enclosed by '"'  	lines terminated by '\n'  ignore 1 rows;
+
+mysql>  load data local infile '/home/ubh01/Downloads/final_Data/Customers Table.csv' into table customers fields terminated by ','  	enclosed by '"'  	lines terminated by '\n'  ignore 1 rows;
+
+
+mysql>  load data local infile '/home/ubh01/Downloads/final_Data/Customer Age.csv' into table customer_age fields terminated by ','  	enclosed by '"'  	lines terminated by '\n'  ignore 1 rows;

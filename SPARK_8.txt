@@ -1,0 +1,28 @@
+SPARK CODE:
+  
+spark.sql("insert into target1 select concat(c.prefix,' ',c.first_name,' ',c.last_name), case when ps.category = 'Electronics' then ps.selling_price*0.1 when ps.category = 'Clothing' then ps.selling_price * 0.05 when ps.category = 'Laundry' then ps.selling_price * 0.03 when ps.category = 'Skin care' then ps.selling_price * 0.08 when ps.category = 'Foods' then ps.selling_price * 0.04 else 0.0 end,FLOOR(year(CURRENT_DATE) - year(ca.date_of_birth)), case when ps.ratings = '4' then 'Good' when ps.ratings = '5' then 'Excellent' when ps.ratings = '3' then 'Satisfactory' when ps.ratings = '2' then 'Unsatisfactory' when ps.ratings = '1' then 'Bad' else 'Unknown' end, year(date_of_purchase), ps.category,ps.sub_category from customer_age ca inner join customers c on ca.customer_id = c.customer_id inner join product_sales ps on ca.customer_id = ps.customer_id inner join products p on p.product_id = ps.product_id")
+
+
+
+
+
+
+SELECT	address,	SUBSTRING_INDEX(address, ',', 1) AS region,	SUBSTRING_INDEX(SUBSTRING_INDEX(address, '[ ,]', 2), ',', -1) AS state FROM	customers;
+
+
+select address, 
+substring_index(address, ',', 1) as region,
+ substring_index(address, ',', -1) as state from customers;
+
+
+SPARK COMMAND:
+ spark.sql("insert into target2 select substring_index(address, ',',1),substring_index(address, ',', -1),zipcode from customers")
+
+
+
+
+
+TO SAVE SPARK DATAFRAME AS CSV FILE:
+target1.write.format("csv").option("header", "true").save("/home/ubh01/Downloads/target1.csv")
+
+ target2.write.format("csv").option("header", "true").save("/home/ubh01/Downloads/target2.csv")

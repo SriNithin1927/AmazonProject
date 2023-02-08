@@ -1,0 +1,16 @@
+
+Creating Directory In HDFS:
+To start hadoop services in Cloudera Clone:
+sudo /home/cloudera/cloudera-manager --force --enterprise
+
+
+sudo -u hdfs hadoop fs -mkdir /Amazon
+
+Copying all the files from local system into HDFS:
+
+sudo -u hdfs hadoop fs -copyFromLocal /home/cloudera/bigdata/Products.csv /AmazonDb
+
+
+sudo -u hdfs hadoop fs -copyFromLocal /home/cloudera/bigdata/Product_Sales.csv /AmazonDb
+sudo -u hdfs hadoop fs -copyFromLocal /home/cloudera/bigdata/Gender_Table.csv /AmazonDb sudo -u hdfs hadoop fs -copyFromLocal /home/cloudera/bigdata/Customers_Table.csv /AmazonDb
+sudo -u hdfs hadoop fs -copyFromLocal /home/cloudera/bigdata/Customers_Age.csv /AmazonD

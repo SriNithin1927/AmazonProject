@@ -1,0 +1,192 @@
+Products Sales Table
+---------------
+product_Id(primary key,int)
+Date_of_purchase(String) 
+Brand(Varchar(20))
+Category(varchar(20))
+Sub_category(varchar(20))
+Price (float)
+Ratings(float)(0-5) 
+Discount()
+Payment_Method (varchar(20))
+
+Customer Details Table
+---------------------
+
+
+customer_id(int)
+Initital_name(varchar(5))
+first_Name(varchar(20))
+last_name (varchar(20))
+gender_id(FK,int)
+gender(string)
+phone_no (varchar(15))
+email (varchar(30))
+Prime_subscription (bit)
+address(Tinytext)       (Country State )
+ZipCode (Varchar(10))
+product_id(int,FK)
+product description(Text)
+
+Gender Table
+Gender_id(int)PK
+Gender_code(varchar(1))
+
+
+Customer Age Table
+----------------
+person_id(PK,int)
+customer_id(FK,int)
+customer_name(varchar(20))
+date_of_birth(date)
+
+
+Create database AmazonDB;
+Use AmazonDB;
+
+Create table products (
+Product_id varchar(4) primary key,
+Brand varchar(20),
+Category varchar(20),
+sub_Category varchar(20),
+Product_name varchar(30),
+Price float );
+
+ load data local infile '/home/cloudera/amazon/products.csv'
+     into table products
+     fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n';
+
+In Cognizant clone 
+mysql> load data local infile '/home/ubh01/Downloads/FinalAmazonDB/products.csv'
+	-> into table products
+	-> fields terminated by ','
+	-> enclosed by '"'
+	-> lines terminated by '\n'
+	-> ignore 1 rows;
+
+
+ create table gender_table(
+    gender_id int primary key,
+     gender_code varchar(1));
+
+
+ load data local infile '/home/cloudera/amazon/gender.csv'
+     into table gender_table
+     fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n';
+
+
+ load data local infile  '/home/ubh01/Downloads/FinalAmazonDB/gender_table.csv'
+    into table gender_table
+	fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n'
+    ignore 1 rows;
+
+
+
+mysql> select * from gender_table;
+
+Create table customers(
+customer_id int primary key,
+prefix varchar(4),
+first_name varchar(20),
+last_name varchar(20),
+gender_id int ,
+phone_no varchar(15),
+email_id varchar(30),
+prime_subscription varchar(4),
+address varchar(50),
+zipcode numeric (6),
+Foreign key (gender_id) references gender_table(gender_id));
+
+
+
+
+load data local infile '/home/cloudera/amazon/customers.csv'
+     into table customers
+     fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n';
+
+
+
+
+
+
+
+load data local infile  '/home/ubh01/Downloads/FinalAmazonDB/customers.csv'
+	into table customers
+    fields terminated by ','
+ 	enclosed by '"'
+ 	lines terminated by '\n'
+	ignore 1 rows;
+
+
+
+
+
+Customer Age Table
+
+ create table customer_age(
+     person_id int primary key,
+     customer_id int,
+     first_name varchar(20),
+     last_name varchar(20),
+     date_of_birth date,
+     foreign key (customer_id) references customers(customer_id));
+
+load data local infile '/home/cloudera/amazon/customer_age.csv'
+     into table customer_age
+     fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n';
+
+In cogni clone
+
+
+load data local infile  '/home/ubh01/Downloads/FinalAmazonDB/customer_age.csv'
+    into table customer_age
+	fields terminated by ','
+	 enclosed by '"'
+	 lines terminated by '\n'
+    ignore 1 rows;
+
+
+
+Product_sales Table
+
+ create table product_sales(
+     sale_id int primary key,
+     product_id varchar(4),
+     customer_id int,
+     date_of_purchase date,
+     brand varchar(20),
+     category varchar(20),
+     sub_category varchar(20),
+     selling_price numeric(12,2),
+     discount_percent int,
+     payment varchar(5),
+     ratings int,
+     foreign key (product_id) references products(product_id),
+     foreign key (customer_id) references customers(customer_id));
+
+load data local infile '/home/cloudera/amazon/product_sales.csv'
+     into table product_sales
+     fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n';
+
+
+Inside Cognizant Clone
+load data local infile  '/home/ubh01/Downloads/FinalAmazonDB/product_sales.csv'
+	into table product_sales
+    fields terminated by ','
+     enclosed by '"'
+     lines terminated by '\n'
+	ignore 1 rows;
+
+

@@ -1,0 +1,96 @@
+SQL COMMAND FOR TARGET TABLE:
+
+Target Table1
+create table target1 (
+	 customer_name varchar(50),
+	 profit float,
+	 age int,
+	 review varchar(15),
+	 year_of_sales int,
+	 category varchar(20),
+	 sub_category varchar(20));
+
+Target Table  2
+ create table target2(
+	 region varchar(40),
+	 state varchar(40),
+	 zipcode varchar(10));
+
+#for profit
+case 
+when ps.category=="Electronics" Then ps.selling_price*0.10
+when ps.category=="Clothing" Then ps.selling_price*0.05
+when ps.category=="Laundry" Then ps.selling_price*0.03
+when ps.category =="Skin care" Then ps.selling_price*0.08
+when ps.category=="Foods" Then ps.selling_price*0.04
+Else 0
+end
+from ps
+
+
+#for review system
+case
+when ps.ratings=="5" Then review == "Excellent"
+when ps.ratings=="4" Then review == "Good"
+when ps.ratings=="3" Then review == "Satisfactory"
+when ps.ratings =="2" Then review == "Not Satisfactory"
+when ps.ratings =="1" Then review == "Would not recommend"
+Else "-"                                                                                                                                                                                                end
+from ps
+
+
+SQL COMMAND FOR TARGET TABLE 2
+SELECT 
+  address, 
+  SUBSTRING_INDEX(address, '[ ,]', 1) AS region, 
+  SUBSTRING_INDEX(SUBSTRING_INDEX(address, '[ ,]', 2), ',', -1) AS state
+FROM 
+  Customers;
+
+
+
+
+#2 TRY THIS
+SELECT 
+address,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(address, ',', 1), ' ', -1) as region,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(address, ',', 2), ' ', -1) as state
+FROM 
+ Customers;
+#3 
+SELECT 
+  address,
+  REGEXP_SUBSTR(address, '[ ,;]+', 1, 1) AS Region,
+  REGEXP_SUBSTR(address, '[ ,;]+', 1, 2) AS State,
+
+FROM customers;
+
+
+
+
+
+
+WORKING CODE IN MYSQL:
+
+
+ insert into target1(name,profit,age,review,year_of_purchase,category,sub_category)
+	 select concat(c.prefix,' ',c.first_name,' ',c.last_name),
+	    	case when ps.category = "Electronics" then ps.selling_price*0.1
+	         	when ps.category = "Clothing" then ps.selling_price * 0.05  
+	         	when ps.category = "Laundry" then ps.selling_price * 0.03  
+	         	when ps.category = "Skin care" then ps.selling_price * 0.08  
+	         	when ps.category = "Foods" then ps.selling_price * 0.04
+	         	else 0 end ,
+	   	timestampdiff(year,ca.date_of_birth,curdate()),
+    	case when ps.ratings = "4" then "Good"
+	         	when ps.ratings = "3" then "Satisfactory"
+	         	when ps.ratings = "2" then "Unsatisfactory"
+	         	when ps.ratings = "1" then "Bad"
+	         	else "-" end,
+	    	year(date_of_purchase),
+	    	ps.category,
+	   	ps.sub_category
+	 from customer_age ca
+	 inner join customers c on ca.customer_id = c.customer_id
+	 inner join product_sales ps on ca.customer_id = ps.customer_id
+	 inner join products p on p.product_id = ps.product_id;

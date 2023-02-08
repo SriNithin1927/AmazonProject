@@ -1,0 +1,44 @@
+Load data in HDFS
+
+$ hdfs dfs -mkdir /project
+
+ubh01@ubh01:~$ hdfs dfs -put /home/ubh01/Downloads/FinalAmazonDB /project
+
+
+
+Partition for target table in hive
+
+
+ create external table target1 ( customer_name varchar(50), profit float, age int, review varchar(15),year_of_sales int) partitioned by (category varchar(20),sub_category varchar(20)) row format delimited fields terminated by ',' lines terminated by '\n' stored as textfile location '/output/category';
+
+
+
+create a temp table
+
+
+create TEMPORARY table temptarget( customer_name varchar(50), profit float, age int, review varchar(15),year_of_sales int,category varchar(20),sub_category varchar(20)) row format delimited fields terminated by ',' lines terminated by '\n';
+
+
+-- Dynamic Partition:Dynamic partitioning is the strategic approach to load the data from the non-partitioned table where the single insert to
+ the partition table is called a dynamic partition
+
+for dynamic parition:
+set hive.exec.dynamic.partition=true;
+if mode is nonstrict then only we can achieve dyanamic parition:
+set hive.exec.dynamic.partition.mode=nonstrict; 
+then we can implement dynamic parition
+
+
+
+Insert into table target1 partition(category,sub_category) select customer_name,profit,age,review, year_of_sales,category,sub_category from temptarget;
+
+hive> show partitions target1;
+
+
+
+
+Queries
+hive> select * from target1 where review in( "Excellent" ,"Good");
+hive> select * from target1 where review in( “Satisfactory”,”Unsatisfactory”,”Bad”);
+
+insert into target3 select concat(c.prefix,' ',c.first_name,' ',c.last_name), case when ps.category = 'Electronics' then ps.selling_price*0.1 when ps.category = 'Clothing' then ps.selling_price * 0.05 when ps.category = 'Laundry' then ps.selling_price * 0.03 when ps.category = 'Skin care' then ps.selling_price * 0.08 when ps.category = 'Foods' then ps.selling_price * 0.04 else 0.0 end,TIMESTAMPDIFF(YEAR,ca.date_of_birth,curdate()), case when ps.ratings = '4' then 'Good' when ps.ratings = '5' then 'Excellent' when ps.ratings = '3' then 'Satisfactory' when ps.ratings = '2' then 'Unsatisfactory' when ps.ratings = '1' then 'Bad' else 'Unknown' end, year(date_of_purchase), ps.category,ps.sub_category from customer_age ca inner join customers c on ca.customer_id = c.customer_id inner join product_sales ps on ca.customer_id = ps.customer_id inner join products p on p.product_id = ps.product_id;

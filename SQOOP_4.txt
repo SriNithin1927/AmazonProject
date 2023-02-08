@@ -1,0 +1,42 @@
+Correct code foR sQoop:
+
+Products Table
+sqoop import --connect jdbc:mysql://localhost:3306/AmazonDB --table products --username sqoop --password password --hive-import --hive-table finalamazondb.products --fields-terminated-by ',' --target-dir /products -m1
+
+
+
+
+
+Customers Table
+sqoop import --connect jdbc:mysql://localhost:3306/amazondb --table customers --username sqoop --password password --hive-import --hive-table amazon.customers --fields-terminated-by ',' -m1
+
+sqoop import --connect jdbc:mysql://localhost:3306/AmazonDB --table customers --username sqoop --password password --hive-import --hive-table finalamazondb.customers --fields-terminated-by ',' --target-dir /customers -m1
+
+
+
+
+
+
+Product Sales Table
+sqoop import --connect jdbc:mysql://localhost:3306/amazondb --table product_sales --username sqoop --password password --hive-import --hive-table amazon.product_sales --fields-terminated-by ',' -m1 
+
+sqoop import --connect jdbc:mysql://localhost:3306/AmazonDB --table product_sales --username sqoop --password password --hive-import --hive-table finalamazondb.products_sales --fields-terminated-by ',' --target-dir /product_sales -m1
+
+
+
+
+
+
+
+Gender Table
+sqoop import --connect jdbc:mysql://localhost:3306/amazondb --table gender_table --username sqoop --password password --hive-import --hive-table amazon.gender_table --fields-terminated-by ',' -m1
+
+sqoop import --connect jdbc:mysql://localhost:3306/AmazonDB --table gender_table --username sqoop --password password --hive-import --hive-table finalamazondb.gender_table  --fields-terminated-by ',' --target-dir /gender_table -m1
+
+
+
+
+Customer_Age Table
+sqoop import --connect jdbc:mysql://localhost:3306/amazondb --table customer_age --username sqoop --password password --hive-import --hive-table amazon.customer_age --fields-terminated-by ',' -m1
+
+sqoop import --connect jdbc:mysql://localhost:3306/AmazonDB --table customer_age --username sqoop --password password --hive-import --hive-table finalamazondb.customer_age --fields-terminated-by ',' --target-dir /customer_age -m1

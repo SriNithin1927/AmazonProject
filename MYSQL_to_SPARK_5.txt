@@ -1,0 +1,29 @@
+Mysql to Spark
+
+Products Table
+
+val products = spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "products").option("user", "root").option("password", "password").load()
+
+Gender Table 
+
+val gender_table = spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "gender_table").option("user", "root").option("password", "password").load()
+
+Customer table 
+
+val customers= spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "customers").option("user", "root").option("password", "password").load()
+
+Customer_Age
+
+val customer_age= spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "customer_age").option("user", "root").option("password", "password").load()
+
+Product_sales Table
+
+val product_sales= spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "product_sales").option("user", "root").option("password", "password").load()
+
+
+Target table1:
+ val target1= spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "target1").option("user", "root").option("password", "password").load()
+
+
+Target Table 2
+ val target2= spark.read.format("jdbc").option("url", "jdbc:mysql://localhost:3306/AmazonDB").option("driver","com.mysql.jdbc.Driver").option("dbtable", "target2").option("user", "root").option("password", "password").load()

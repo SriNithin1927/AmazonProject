@@ -1,0 +1,27 @@
+Business Use Case Queries:
+
+
+create table product_sales(
+     sale_id int,
+     product_id varchar(4),
+     customer_id int,
+     date_of_purchase varchar(12),
+     brand varchar(20),
+     category varchar(20),
+     sub_category varchar(20),
+     selling_price float,
+     discount_percent int,
+     payment varchar(5),
+     ratings int);
+
+LOAD DATA LOCAL INFILE '/home/ubh01/Downloads/Product Sales.csv' INTO TABLE product_sales FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+
+Count of Highest rating and lowest rating 
+SELECT * FROM product_sales ;
+SELECT Ratings, COUNT(*) FROM product_sales  WHERE Ratings IN ('5', '1') GROUP BY Ratings ;
+
+Most sold products
+SELECT product_id, COUNT(product_id) as count  FROM product_sales GROUP BY product_id  ORDER BY count  DESC;
+
+Highest rated products 
+Select category, product_id, ratings FROM product_sales WHERE (category, ratings) IN (SELECT category, MAX(ratings) FROM product_sales GROUP BY category);

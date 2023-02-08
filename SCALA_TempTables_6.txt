@@ -1,0 +1,18 @@
+Create temp tables
+
+scala> products.createOrReplaceTempView("products")
+
+scala> customers.createOrReplaceTempView("customers")
+
+scala> customer_age.createOrReplaceTempView("customer_age")
+
+scala> gender_table.createOrReplaceTempView("gender_table")
+
+scala> product_sales.createOrReplaceTempView("product_sales")
+
+
+Target table 1:
+target1.createOrReplaceTempView("target1")
+
+Target table 2:
+target2.createOrReplaceTempView("target2")
